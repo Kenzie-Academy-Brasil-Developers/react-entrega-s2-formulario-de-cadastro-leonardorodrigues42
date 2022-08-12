@@ -1,33 +1,34 @@
 import styled from "styled-components";
 
-const LoginDiv = styled.div`
-    font-family: 'Inter', sans-serif;
+const AddModalDiv = styled.div`
 
-    color: #fff;
-    background: #121214;
-    height: 100vh;
-
+    width: 100%;
+    background: #343B41;
+    opacity: 0.9;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    
-    h2 {
-        margin-top: 77px;
-        font-size: 34px;
-        color: #FF577F;
-    }        
+    min-height: 100vh;
+    position: absolute;
     
     form {
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
         width: 369px;
-        height: 502px;
-        justify-content: space-between;
+        height: fit-content;
+        justify-content: center;
+        gap: 15px;
         align-items: center;
         background: #212529;
         padding: 25px;
         border-radius: 5px;
+        margin-bottom: 40px;
+        opacity: 1;
+    }
+
+    .btn-close {
+        background: red;
     }
     
     .inputArea {
@@ -41,7 +42,7 @@ const LoginDiv = styled.div`
         box-sizing: border-box;
         height: 40px;
         border-radius: 4px;
-        border: 1px solid white;
+        border: none;
         padding: 0 10px;
         background: #343B41;
         color: #fff;
@@ -57,22 +58,27 @@ const LoginDiv = styled.div`
         width: 100%;
 
         color: #fff;
-        font-weight: 500;
-        background: #868E96;
+        font-weight: 600;
+        background: #FF577F;
 
         font-size: 15px;
         border: none;
         border-radius: 3px;
     }
 
-    .submit {
-        background: #FF577F;
+    select {
+        box-sizing: border-box;
+        height: 40px;
+        border-radius: 4px;
+        border: none;
+        padding: 10px;
+        background: #343B41;
+        color: #fff;
     }
 
     button:hover {
         cursor: pointer;
     }
-
 `
 
-export default LoginDiv
+export default AddModalDiv

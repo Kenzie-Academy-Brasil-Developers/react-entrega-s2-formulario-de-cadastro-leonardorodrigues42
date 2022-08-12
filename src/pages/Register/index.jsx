@@ -1,38 +1,18 @@
+import { useContext } from "react"
+import { Link } from "react-router-dom"
+import { AuthContext } from "../../contexts/AuthContext"
+import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form"
-import * as yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
-import api from "../../services/api"
-import { Link, useNavigate } from "react-router-dom"
 import RegisterDiv from "./styles"
+import { schemaForm } from "../../validators"
 
 const Register = () => {
-
-    const schemaForm = yup.object().shape({
-        name: yup.string().required("Nome obrigatório"),
-        email: yup.string().required("Email obrigatório")
-                .email("Email inválido"),
-        password: yup.string().required("Senha obrigatória")
-                .min(8, "Mínimo de 8 caracteres"),
-        bio: yup.string(),
-        contact: yup.string(),
-        course_module: yup.string()
-    })
+  
+    const { onSubmitRegister } = useContext(AuthContext)
 
     const { register, handleSubmit } = useForm({
         resolver: yupResolver(schemaForm)
     })
-
-    
-    const navigate = useNavigate()
-
-    const onSubmit = (data) => {
-
-        api.post("/users", data)
-            .then(res => console.log(res))
-            .then(() => navigate("/login", {replace: true}))
-            .catch(err => console.log(err))
-
-    }
 
     return (
         <RegisterDiv>
@@ -42,7 +22,7 @@ const Register = () => {
                 <button type="button"><Link to={"/login"} >Voltar</Link></button>
             </div>
 
-            <form onSubmit={handleSubmit(onSubmit)} action="">
+            <form onSubmit={handleSubmit(onSubmitRegister)} action="">
 
                 <div className="container-register">
                     <h3>Crie sua conta</h3>

@@ -1,45 +1,27 @@
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
-import * as yup from "yup"
-import api from "../../services/api"
-import { toast } from 'react-toastify'
+import { AuthContext } from "../../contexts/AuthContext"
+import { useContext } from "react"
+import { schemaLogin } from "../../validators"
 import 'react-toastify/dist/ReactToastify.css'
 import LoginDiv from "./styles"
 
 const Login = () => {
-
-    const schemaLogin = yup.object().shape({
-        email: yup.string().required("Email não informado"),
-        password: yup.string().required("Senha não informada")
-    })
 
     const { register, handleSubmit } = useForm({
         resolver: yupResolver(schemaLogin)
     })
 
     const navigate = useNavigate()
-    const notify = () => {
-        toast("Login realizado!")
-    }
 
-    const onSubmit = (data) => {
-        
-        api.post("/sessions", data)
-            .then(res => {
-                localStorage.setItem("token", res.data.token)
-                localStorage.setItem("userId", res.data.user.id)
-                notify()
-                navigate("/dashboard", {replace: true})
-            }).catch(err => console.error(err))
-
-    }
+    const { onSubmitLogin } = useContext(AuthContext)
 
     return (
         <LoginDiv>
             <h2>Kenzie Hub</h2>
 
-            <form action="" onSubmit={handleSubmit(onSubmit)}>
+            <form action="" onSubmit={handleSubmit(onSubmitLogin)}>
                 <h3>Login</h3>
 
                 <div className="inputArea">

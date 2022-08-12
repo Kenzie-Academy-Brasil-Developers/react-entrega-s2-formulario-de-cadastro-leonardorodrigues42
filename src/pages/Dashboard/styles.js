@@ -2,28 +2,29 @@ import styled from "styled-components";
 
 const DashboardDiv = styled.div`
 
+    box-sizing: border-box; 
     margin: 0;
 
     font-family: 'Inter', sans-serif;
 
-    :hover {
-        overflow: hidden;
-    }
+    overflow: auto;
 
     color: #fff;
     background: #121214;
-    height: 100vh;
+    max-width: 100%;
 
-    box-sizing: border-box;
+    min-height: 100vh;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     
     .dashboard-header {
-        width: 60%;
+        width: 800px;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        border-bottom: 1px solid gray ;
         
         h2 {
             color: #FF577F;
@@ -46,12 +47,13 @@ const DashboardDiv = styled.div`
     }
 
     .user-infos {
-        width: 60%;
+        width: 800px;
         height: 110px;
 
         display: flex;
         justify-content: space-between;
         align-items: center;
+        border-bottom: 1px solid gray ;
 
         span {
             font-size: 14px;
@@ -60,9 +62,7 @@ const DashboardDiv = styled.div`
     }
 
     .dashboard-infos {
-        width: 60%;
-
-        
+        width: 800px;        
     }
 
     hr {

@@ -1,49 +1,52 @@
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import api from "../../services/api"
+import { useContext, useEffect, useState } from "react"
+import AddModal from "../../components/AddModal"
+import Tech from "../../components/Tech"
+import TechsContainer from "../../components/TechsContainer"
+import { AuthContext } from "../../contexts/AuthContext"
+import TechProvider from "../../contexts/TechContext"
 import DashboardDiv from "./styles"
 
 const Dashboard = () => {
 
-    const [user, setUser] = useState({})
+    const {user, handleLogout} = useContext(AuthContext)
 
-    const navigate = useNavigate()
-   
-    
+    const [modalIsOpen, setModalIsOpen] = useState(false)
+
+    const [techs, setTechs] = useState(user.techs)
+
     useEffect(()=> {
-
-        if (!localStorage.getItem("userId")) {
-            navigate("/login", {replace: true})
-        } else {
-            api.get(`/users/${localStorage.getItem("userId")}`)
-                        .then(resp => setUser(resp.data))
-        }
-
+        const addTech = () => setTechs(user.techs)
+        addTech()
     })
 
-    const handleLogout = () => {
-        localStorage.clear()
-    }
-
     return (
-        <DashboardDiv>
-            <div className="dashboard-header">
-                <h2>Kenzie Hub</h2>
-                <button onClick={handleLogout} >Sair</button>
-            </div>
-            <hr />
-            <div className="user-infos">
-                <h3>Olá, {user.name}</h3>
-                <span>{user.course_module}</span>
-            </div>
-            <hr />
-            <div className="dashboard-infos">
-                <h3>Que pena! Estamos em desenvolvimento :&#40;</h3>
-                <span>Nossa aplicação está em desenvolvimento, em breve teremos novidades</span>
-            </div>    
+        <TechProvider>
 
-        </DashboardDiv>
+                <DashboardDiv>
+                    {modalIsOpen === true && (<AddModal setModalIsOpen={setModalIsOpen}/>)}
+                    
+                    <div className="dashboard-header">
+                        <h2>Kenzie Hub</h2>
+                        <button onClick={handleLogout} >Sair</button>
+                    </div>
+                    <div className="user-infos">
+                        <h3>Olá, {user.name}</h3>
+                        <span>{user.course_module}</span>
+                    </div>
+                    <div className="dashboard-infos">
+                        <TechsContainer setModalIsOpen={setModalIsOpen}>
+                            {
+                                techs && techs.map(tech => {
+                                    return <Tech key={tech.id} name={tech.title} id={tech.id} experience={tech.status} setModalIsOpen={setModalIsOpen}/>
+                                })
+                            }
+                            
+                        </TechsContainer>
+                    </div>    
+                </DashboardDiv>
 
+
+        </TechProvider>
     )
 }
 
