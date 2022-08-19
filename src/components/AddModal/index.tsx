@@ -1,11 +1,15 @@
-import { useContext, useEffect, useRef } from "react"
+import { ChangeEvent, useContext, useEffect, useRef } from "react"
 import { TechContext } from "../../contexts/TechContext"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { useForm } from "react-hook-form"
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 import AddModalDiv from "./styles"
 import { schemaAddTech } from "../../validators"
 
-const AddModal = ({setModalIsOpen}) => {
+export interface IAddModalProps {
+    setModalIsOpen: (is: boolean) => void
+}
+
+const AddModal = ({setModalIsOpen}: IAddModalProps) => {
 
     const {addTech} = useContext(TechContext)
 
@@ -13,11 +17,11 @@ const AddModal = ({setModalIsOpen}) => {
         resolver: yupResolver(schemaAddTech)
     })
 
-    const modalRef = useRef()
+    const modalRef = useRef<HTMLFormElement>(null)
 
     useEffect(() => {
-        const modalClick = (e) => {
-            if (!modalRef.current.contains(e.target)) {
+        const modalClick = (e: MouseEvent) => {
+            if (!modalRef.current?.contains(e.target as HTMLFormElement)) {
                 setModalIsOpen(false)
             }
         }
@@ -43,7 +47,7 @@ const AddModal = ({setModalIsOpen}) => {
                 </div>
 
                 <div className="inputArea">
-                    <select name="status" {...register("status")}>
+                    <select {...register("status")}>
                         <option value="Iniciante">Iniciante</option>
                         <option value="Intermediário">Intermediário</option>
                         <option value="Avançado">Avançado</option>

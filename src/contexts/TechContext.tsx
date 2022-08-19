@@ -1,16 +1,35 @@
-import { createContext } from "react";
+import { AxiosPromise } from "axios";
+import { createContext, ReactNode } from "react";
+import { FieldValue, FieldValues, SubmitHandler } from "react-hook-form";
 import { toast } from "react-toastify";
 import api from "../services/api";
+import { IAxiosResponse } from "./AuthContext";
 
-export const TechContext = createContext({})
 
-const TechProvider = ({children}) => {
+interface ITechProviderProps {
+    children: ReactNode
+}
+
+export interface Itech {
+    title: string
+    status: string
+    id: string
+}
+
+interface ITechContext {
+    addTech: any
+    deleteTech: (id: string) => void
+}
+
+export const TechContext = createContext<ITechContext>({} as ITechContext)
+
+const TechProvider = ({children}: ITechProviderProps) => {
 
     
-    const addTech = (data) => {
+    const addTech = (data: Itech) => {
         
         toast.promise(
-            api.post("/users/techs", data, {
+            api.post<IAxiosResponse>("/users/techs", data, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 }
@@ -23,10 +42,10 @@ const TechProvider = ({children}) => {
         )
     }
 
-    const deleteTech = (id) => {
+    const deleteTech = (id: string) => {
 
         toast.promise(
-            api.delete(`/users/techs/${id}`, {
+            api.delete<IAxiosResponse>(`/users/techs/${id}`, {
                 headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
             }),
 

@@ -3,7 +3,7 @@ import AddModal from "../../components/AddModal"
 import Tech from "../../components/Tech"
 import TechsContainer from "../../components/TechsContainer"
 import { AuthContext } from "../../contexts/AuthContext"
-import TechProvider from "../../contexts/TechContext"
+import TechProvider, { Itech } from "../../contexts/TechContext"
 import DashboardDiv from "./styles"
 
 const Dashboard = () => {
@@ -12,7 +12,8 @@ const Dashboard = () => {
 
     const [modalIsOpen, setModalIsOpen] = useState(false)
 
-    const [techs, setTechs] = useState(user.techs)
+    const [techs, setTechs] = useState<Itech[]>(user.techs)
+
 
     useEffect(()=> {
         const addTech = () => setTechs(user.techs)

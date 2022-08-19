@@ -1,8 +1,15 @@
-import { useContext } from "react"
+import { Dispatch, SetStateAction, useContext } from "react"
 import { TechContext } from "../../contexts/TechContext"
 import TechDiv from "./styles"
 
-const Tech = ({name, experience, id, setModalIsOpen}) => {
+interface ITechProps {
+    name: string
+    experience: string
+    id: string
+    setModalIsOpen: Dispatch<SetStateAction<boolean>>
+}
+
+const Tech = ({name, experience, id}: ITechProps) => {
 
     const { deleteTech } = useContext(TechContext)
     return (

@@ -1,15 +1,17 @@
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
-import { AuthContext } from "../../contexts/AuthContext"
+import { AuthContext, IUserLogin } from "../../contexts/AuthContext"
 import { useContext } from "react"
 import { schemaLogin } from "../../validators"
 import 'react-toastify/dist/ReactToastify.css'
 import LoginDiv from "./styles"
 
+
+
 const Login = () => {
 
-    const { register, handleSubmit } = useForm({
+    const { register, handleSubmit } = useForm<IUserLogin>({
         resolver: yupResolver(schemaLogin)
     })
 
@@ -19,6 +21,7 @@ const Login = () => {
 
     return (
         <LoginDiv>
+            
             <h2>Kenzie Hub</h2>
 
             <form action="" onSubmit={handleSubmit(onSubmitLogin)}>
